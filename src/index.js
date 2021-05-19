@@ -25,7 +25,7 @@ const FOOTER = () => <footer>
       left: 0,
     }}>
       <a
-        href='https://github.com/'
+        href='https://github.com/hthrkuh/weather--react'
         className='github-corner'
         aria-label='View source on GitHub'
         target='_blank'
