@@ -71,8 +71,8 @@ class Demo extends Component {
         return (
             <div>
                 <h4>Using geolocation JavaScript API in React</h4>
-                <span>your location :{this.state.city || "please confirm access to your location"}</span>
-            </div>
+                <span>your location :{this.state.city || <span className="text-danger"> please confirm access to your location </span>}</span>
+            </div >
         );
     }
 }
