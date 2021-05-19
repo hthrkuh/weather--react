@@ -18,9 +18,7 @@ export const initialState = {
    city: "Tel Aviv",
    geo: false,
    loading: true,
-   data: {
-      callerError: false,
-   },
+
 
 }
 
