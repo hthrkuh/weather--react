@@ -78,7 +78,7 @@ class MyFav extends Component {
                 <div className="d-flex flex-lg-nowrap flex-wrap">
                     {
 
-                        this.state.weatherData.length ?
+                        this.state.weatherData.length && this.state.fav.length ?
                             this.state.fav.map((x, i) => {
                                 const selectedDay = [...this.state.weatherData[i]].findIndex((x) => this.state.selectedDay === new Date(x.Date).getDay())
 
