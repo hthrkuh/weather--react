@@ -58,7 +58,7 @@ class App extends Component {
     let locations
     try {
       locations = await http.get(
-        `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${this.props.api_key[2]}`
+        `https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${this.props.api_key[1]}`
       )
     }
     catch (e) {

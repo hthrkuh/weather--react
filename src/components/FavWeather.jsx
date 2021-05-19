@@ -12,6 +12,7 @@ export const FavWeather = ({
     selectedConvert,
     fav
 }) => {
+    // debugger
     return (
 
 

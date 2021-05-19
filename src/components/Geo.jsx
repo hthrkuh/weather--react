@@ -21,7 +21,7 @@ class Demo extends Component {
         try {
 
             data = (
-                await http.get(`https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${this.props.api_key[2]}&q=${latlong}`)
+                await http.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${this.props.api_key[1]}&q=${latlong}`)
 
             ).data
         } catch (error) {

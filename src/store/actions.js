@@ -28,16 +28,19 @@ export function getForcast(value) {
    return function () {
 
       return http.get(
-         `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[2]}&details=true`
+         `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[1]}&details=true`
       )
          .catch(
             () => {
                http.get(
                   `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[3]}&details=true`
-               ).then((response) => {
-
-                  store.dispatch(forecast(response))
-               })
+               ).catch(
+                  store.dispatch(forecast([]))
+               )
+                  .then((response) => {
+                     if (response)
+                        store.dispatch(forecast(response))
+                  })
             }
          )
          .then((response) => {

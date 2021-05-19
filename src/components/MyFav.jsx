@@ -14,7 +14,6 @@ const Loading = () => <div className="loading">
     <div></div>
 </div>
 
-// export default 
 class MyFav extends Component {
     constructor(props) {
         super(props);
@@ -27,8 +26,10 @@ class MyFav extends Component {
     }
 
     componentDidMount() {
-        if (this.state.fav)
+        if (this.state.fav) {
             this.data()
+        }
+
         favme()
 
     }
