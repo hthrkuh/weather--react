@@ -26,20 +26,25 @@ export function typePlacename(e) {
 }
 export function getForcast(value) {
    return function () {
-      try {
 
-         return http.get(
-            `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[2]}&details=true`
-         ).then((response) => {
-            store.dispatch(forecast(response))
+      return http.get(
+         `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[2]}&details=true`
+      )
+         .catch(
+            () => {
+               http.get(
+                  `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[3]}&details=true`
+               ).then((response) => {
+
+                  store.dispatch(forecast(response))
+               })
+            }
+         )
+         .then((response) => {
+            if (response)
+               store.dispatch(forecast(response))
          })
-      } catch (error) {
-         return http.get(
-            `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[3]}&details=true`
-         ).then((response) => {
-            store.dispatch(forecast(response))
-         })
-      }
+
 
 
    }
