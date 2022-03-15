@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 axios.interceptors.response.use(null, error => {
 
     toast.error(error.message);
-    if (!error.response.data.Message)
-        toast.error(error.response.data);
+    if (!error.response?.data.Message)
+        toast.error(error.response?.data);
     else
-        toast.error(error.response.data.Message);
+        toast.error(error.response?.data.Message);
     return Promise.reject(error);
 });
 let http = {

@@ -119,7 +119,6 @@ const mapStateToProps = state => {
         selectedOption: state.selectedOption,
         code: state.code,
         city: state.city,
-        api_key: state.api_key,
     }
 }
 

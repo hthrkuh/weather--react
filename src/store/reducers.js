@@ -6,10 +6,6 @@ import {
 
 
 export const initialState = {
-   api_key: ["jdJtjY5LHZvdj0IS8iiRqturSfo6sjq3",
-      "Pcam0PjGtEMwkxAAI0LL8lIjSlpwkHFS",
-      "EVO76C8niYMxHwXnuF7yAiRLSKA3R8Ud",
-      "keIkcwQuwHMsCqZJawOVskNUec3ErVQq"],
    userInput: {
       err: false
    },

@@ -3,6 +3,8 @@ import "./css/App.css";
 import http from "./services/httpService";
 import $ from "jquery";
 import DropdownSelect from "./components/DropdownSelect";
+import FlyIcons from "./components/flyicon";
+
 import TemperatureConverter from "./components/TemperatureConverter";
 import WeeklyWeatherContainer from "./components/WeeklyWeatherContainer";
 import Fav from "./components/Fav";
@@ -45,6 +47,7 @@ class App extends Component {
     favme()
     this.setState({ fav: this.props.initfav() })
   }
+
   componentWillUnmount() {
   }
   async componentDidUpdate(prevProps, prevState) {
@@ -55,28 +58,42 @@ class App extends Component {
   }
 
   getLocations = async () => {
+
     let locations
-    try {
-      locations = await http.get(
-        `https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${this.props.api_key[1]}`
-      )
+    const api_keys = JSON.parse(process.env.REACT_APP_API_KEYS)
+    for (let i = 0; i < api_keys.length; i++) {
+
+      locations = await new Promise((resolve, reject) => {
+        resolve(http.get(
+          `https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${api_keys[i]}`
+        ).catch((x => reject(x))))
+      }).catch((x) => {
+        console.error(x)
+        toast.info("API KEY HAS BEEN CHANGED")
+      })
+
+      if (locations)
+        break
+
+      if (i === api_keys.length - 1)
+        toast.info("ALL API KEYS HAS BEEN USED TRY AGAIN TOMORROW");
+
     }
-    catch (e) {
-      toast.info("API KEY HAS BEEN CHANGED");
-      locations = await http.get(
-        `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${this.props.api_key[3]}`
-      )
-    } finally {
-      const cityCountry = [];
-      if (locations) {
-        for (let location of locations.data) {
-          let label = location.AdministrativeArea.EnglishName;
-          let value = location.Country.EnglishName;
-          let code = location.Key;
-          cityCountry.push({ label, value, code });
-        }
-        this.setState({ locationsApi: cityCountry });
+
+
+
+
+
+
+    const cityCountry = [];
+    if (locations?.data) {
+      for (let location of locations.data) {
+        let label = location.AdministrativeArea.EnglishName;
+        let value = location.Country.EnglishName;
+        let code = location.Key;
+        cityCountry.push({ label, value, code });
       }
+      this.setState({ locationsApi: cityCountry });
     }
   };
 
@@ -108,7 +125,7 @@ class App extends Component {
             }
             checked={this.selectedConvert}
           />
-
+          <FlyIcons />
           <DropdownSelect
             locations={this.state.locationsApi}
           />
@@ -146,6 +163,17 @@ class App extends Component {
                 ] : ""}
 
           </div>
+          {/* <!-- hitwebcounter Code START --> */}
+          <a href="https://www.hitwebcounter.com" rel="noreferrer" target="_blank">
+            <img src="https://hitwebcounter.com/counter/counter.php?page=7826724&style=0001&nbdigits=5&type=page&initCount=0" title="Free Counter" alt="web counter" border="0" />
+          </a>
+          <div id="sfcbg6g2l2n5jf3rhu8t5y6m5r3f5h9e82x"></div>
+
+          <noscript>
+            <a href="https://www.freecounterstat.com" title="hit counter for website">
+              <img src="https://counter6.stat.ovh/private/freecounterstat.php?c=bg6g2l2n5jf3rhu8t5y6m5r3f5h9e82x" border="0" title="hit counter for website" alt="hit counter for website" />
+            </a>
+          </noscript>
         </div>
       </React.Fragment >
     );
@@ -159,7 +187,6 @@ const mapStateToProps = state => {
     weatherData: state.weatherData,
     code: state.code,
     city: state.city,
-    api_key: state.api_key,
     loading: state.loading,
     geo: state.geo
   }

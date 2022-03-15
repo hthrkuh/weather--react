@@ -14,7 +14,10 @@ class DropdownSelect extends Component {
     this.state = {}
 
     this.customStyles = {
-
+      noOptionsMessage: base => ({
+        ...base, background: "black",
+        color: "red"
+      }),
       option: (provided, state) => ({
         ...provided,
         borderBottom: '1px dotted pink',
@@ -34,7 +37,7 @@ class DropdownSelect extends Component {
     }
   }
 
-  onInputChange = e => {
+  onInputChange = (e) => {
     this.props.placenameHandler(e)
   }
   onChange = selectedOption => {
@@ -56,6 +59,11 @@ class DropdownSelect extends Component {
           options={this.props.locations}
           onChange={this.onChange}
           onInputChange={this.onInputChange}
+          noOptionsMessage={({ inputValue }) => {
+            // debugger
+            return /[^A-Za-z]/ig.test(inputValue)
+              ? "Searching should be done in English letters only" : "No results found"
+          }}
         />
 
       </div>

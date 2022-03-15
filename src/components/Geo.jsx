@@ -18,16 +18,16 @@ class Demo extends Component {
     */
     updateAddress = async (latlong) => {
         let data
+        const api_keys = JSON.parse(process.env.REACT_APP_API_KEYS)
         try {
 
             data = (
-                await http.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${this.props.api_key[1]}&q=${latlong}`)
+                await http.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${api_keys[1]}&q=${latlong}`)
 
             ).data
-        } catch (error) {
+        } catch (error) { //https://cors-anywhere.herokuapp.com/
             data = (
-                await http.get(`https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${this.props.api_key[3]}&q=${latlong}`)
-
+                await http.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${api_keys[3]}&q=${latlong}`)
             ).data
 
         } finally {
@@ -83,7 +83,6 @@ const mapStateToProps = state => {
     return {
         code: state.code,
         city: state.city,
-        api_key: state.api_key,
     }
 }
 

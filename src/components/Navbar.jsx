@@ -26,7 +26,7 @@ class Navbar extends Component {
                         state: {}
                     }} >
                         Home
-          </NavLink>
+                    </NavLink>
                     <button className="navbar-toggler ms-sm-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -35,7 +35,7 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/MyFav">
                                     MyFav
-                </NavLink>
+                                </NavLink>
                             </li>
 
                         </ul>
@@ -47,7 +47,7 @@ class Navbar extends Component {
                         </ul>
 
                     </div>
-                    <div className="navbar-brand text-wrap">Herolo - Weather App</div>
+                    <div className="navbar-brand text-wrap">Weather App</div>
                 </div>
             </nav>
         );

@@ -1,14 +1,12 @@
 import store from './store'
 import http from "../services/httpService";
+import { toast } from "react-toastify";
 
 export const TYPE_IN_CITYNAME_FIELD = "TYPE_IN_CITYNAME_FIELD"
 export const weatherData = "weatherData"
 export const SelectedOption = "SelectedOption"
 
-const api_key = ["jdJtjY5LHZvdj0IS8iiRqturSfo6sjq3",
-   "Pcam0PjGtEMwkxAAI0LL8lIjSlpwkHFS",
-   "EVO76C8niYMxHwXnuF7yAiRLSKA3R8Ud",
-   "keIkcwQuwHMsCqZJawOVskNUec3ErVQq"]
+
 
 export function typePlacename(e) {
 
@@ -25,32 +23,30 @@ export function typePlacename(e) {
    }
 }
 export function getForcast(value) {
-   return function () {
+   return async function () {
+      const api_keys = JSON.parse(process.env.REACT_APP_API_KEYS)
+      let Forecast
+      for (let i = 0; i < api_keys.length; i++) {
 
-      return http.get(
-         `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[1]}&details=true`
-      )
-         .catch(
-            () => {
-               http.get(
-                  `https://cors-anywhere.herokuapp.com/https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_key[3]}&details=true`
-               ).catch(
-                  store.dispatch(forecast([]))
-               )
-                  .then((response) => {
-                     if (response)
-                        store.dispatch(forecast(response))
-                  })
-            }
-         )
-         .then((response) => {
-            if (response)
-               store.dispatch(forecast(response))
+
+         Forecast = await new Promise((resolve, reject) => {
+            resolve(http.get(
+               `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${value}?apikey=${api_keys[i]}&details=true`
+            ).catch((x => reject(x))))
+         }).catch((x) => {
+            console.error(x)
+            toast.info("API KEY HAS BEEN CHANGED")
          })
 
+         if (Forecast)
+            return store.dispatch(forecast(Forecast))
 
+
+      }
 
    }
+
+
 
 
 };
@@ -59,7 +55,7 @@ export function getForcast(value) {
 export function forecast(forecast) {
    return {
       type: weatherData,
-      weatherData: forecast.data.DailyForecasts,
+      weatherData: forecast?.data.DailyForecasts,
 
    }
 }
