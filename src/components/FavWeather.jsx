@@ -12,7 +12,6 @@ export const FavWeather = ({
     selectedConvert,
     fav
 }) => {
-    // debugger
     return (
 
 
@@ -21,7 +20,7 @@ export const FavWeather = ({
 
                 {weatherData[0] ? (
                     <Link className=" navbar-brand" to={{
-                        pathname: "/weather--react",
+                        pathname: "/weather--react/",
                         search: "?selectedCity=" + selectedCity + "&code=" + code,
                     }}>
                         <div className=" d-flex p-2 bd-highlight justify-content-center text-light text-break ">

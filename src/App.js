@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./css/App.css";
-import http from "./services/httpService";
 import $ from "jquery";
 import DropdownSelect from "./components/DropdownSelect";
 import FlyIcons from "./components/flyicon";
@@ -16,7 +15,6 @@ import queryString from 'query-string';
 import { connect } from 'react-redux'
 import store from './store/store'
 import { selectedOption, getForcast } from './store/actions'
-import { toast } from "react-toastify";
 
 const Loading = () => <div className="loading">
   <div></div>
@@ -28,7 +26,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      locationsApi: [],
       fav: [],
       selectedDay: 0,
       selectedConvert: true,
@@ -36,16 +33,17 @@ class App extends Component {
     };
 
   }
-  async componentDidMount() {
+  componentDidMount() {
 
-    await this.getLocations();
     let { code, selectedCity } = queryString.parse(this.props.location.search)
     if (code) {
       this.props.selectedOption({ code: code, city: selectedCity })
     }
-    await this.props.getForcast(code || this.props.code)
-    favme()
-    this.setState({ fav: this.props.initfav() })
+    this.props.getForcast(code || this.props.code).then(() => {
+      favme()
+      this.setState({ fav: this.props.initfav() })
+    })
+
   }
 
   componentWillUnmount() {
@@ -56,47 +54,6 @@ class App extends Component {
       this.props.getForcast("215854")
     }
   }
-
-  getLocations = async () => {
-
-    let locations
-    const api_keys = JSON.parse(process.env.REACT_APP_API_KEYS)
-    for (let i = 0; i < api_keys.length; i++) {
-
-      locations = await new Promise((resolve, reject) => {
-        resolve(http.get(
-          `https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=${api_keys[i]}`
-        ).catch((x => reject(x))))
-      }).catch((x) => {
-        console.error(x)
-        toast.info("API KEY HAS BEEN CHANGED")
-      })
-
-      if (locations)
-        break
-
-      if (i === api_keys.length - 1)
-        toast.info("ALL API KEYS HAS BEEN USED TRY AGAIN TOMORROW");
-
-    }
-
-
-
-
-
-
-    const cityCountry = [];
-    if (locations?.data) {
-      for (let location of locations.data) {
-        let label = location.AdministrativeArea.EnglishName;
-        let value = location.Country.EnglishName;
-        let code = location.Key;
-        cityCountry.push({ label, value, code });
-      }
-      this.setState({ locationsApi: cityCountry });
-    }
-  };
-
 
   fav = (e) => {
     $(e.target).toggleClass('active');
@@ -127,7 +84,6 @@ class App extends Component {
           />
           <FlyIcons />
           <DropdownSelect
-            locations={this.state.locationsApi}
           />
           <div className="content">
 

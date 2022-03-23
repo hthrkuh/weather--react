@@ -2,7 +2,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 axios.interceptors.response.use(null, error => {
-
     toast.error(error.message);
     if (!error.response?.data.Message)
         toast.error(error.response?.data);

@@ -2,7 +2,6 @@ import React from "react";
 
 
 const FlyIcons = () => {
-    // debugger
     return (
         <div className="half-column relative top-line integrations-wrapper">
             <div className="integration-icon zoominfo">

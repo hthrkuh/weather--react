@@ -22,7 +22,7 @@ class Demo extends Component {
         try {
 
             data = (
-                await http.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${api_keys[1]}&q=${latlong}`)
+                await http.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${api_keys[0]}&q=${latlong}`)
 
             ).data
         } catch (error) { //https://cors-anywhere.herokuapp.com/

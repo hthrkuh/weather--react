@@ -100,7 +100,7 @@ class Index extends Component {
             <header className={` bg-${colorTheme} text-${theme}`} >
               <Navbar />
             </header>
-            <main className="flex-column" style={{ minHeight: "450px" }}>
+            <main className="flex-column" style={{ minHeight: "100vh" }}>
               <Switch>
                 <Route path="/MyFav" component={() => <MyFav
                   initfav={this.initfav}
@@ -109,7 +109,7 @@ class Index extends Component {
                   handleDaySelection={this.handleDaySelection}
                   fav={this.fav}
                 />} />
-                <Route path="/weather--react" exact component={() => <App
+                <Route path="/weather--react/" exact component={() => <App
                   initfav={this.initfav}
                   temperatureConverter={this.temperatureConverter}
                   handleDaySelection={this.handleDaySelection}
